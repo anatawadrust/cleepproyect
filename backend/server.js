@@ -126,6 +126,213 @@ app.delete('/api/proveedor/:codigo', (req, res) => {
   });
 });
 
+
+
+// Endpoint para obtener datos de la tabla carrito
+app.get('/api/carrito', (req, res) => {
+  connection.query('SELECT * FROM carrito', (err, results) => {
+    if (err) {
+      console.error('Error fetching carrito:', err);
+      return res.status(500).send(err);
+    }
+    res.json(results);
+  });
+});
+
+// Endpoint para agregar un nuevo carrito
+app.post('/api/carrito', (req, res) => {
+  const { cliente, producto, proveedor_codigo } = req.body;
+  const query = 'INSERT INTO carrito (cliente, producto, proveedor_codigo) VALUES (?, ?, ?)';
+  connection.query(query, [cliente, producto, proveedor_codigo], (err, results) => {
+    if (err) {
+      console.error('Error adding carrito:', err);
+      return res.status(500).send(err);
+    }
+    res.status(201).json({ message: 'Carrito added successfully', id: results.insertId });
+  });
+});
+
+// Endpoint para actualizar un carrito existente
+app.put('/api/carrito/:cod', (req, res) => {
+  const { cod } = req.params;
+  const { cliente, producto, proveedor_codigo } = req.body;
+  const query = 'UPDATE carrito SET cliente = ?, producto = ?, proveedor_codigo = ? WHERE cod = ?';
+  connection.query(query, [cliente, producto, proveedor_codigo, cod], (err, results) => {
+    if (err) {
+      console.error('Error updating carrito:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Carrito updated successfully' });
+  });
+});
+
+// Endpoint para eliminar un carrito existente
+app.delete('/api/carrito/:cod', (req, res) => {
+  const { cod } = req.params;
+  const query = 'DELETE FROM carrito WHERE cod = ?';
+  connection.query(query, [cod], (err, results) => {
+    if (err) {
+      console.error('Error deleting carrito:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Carrito deleted successfully' });
+  });
+});
+
+// Endpoint para obtener datos de la tabla descripcion
+app.get('/api/descripcion', (req, res) => {
+  connection.query('SELECT * FROM descripcion', (err, results) => {
+    if (err) {
+      console.error('Error fetching descripcion:', err);
+      return res.status(500).send(err);
+    }
+    res.json(results);
+  });
+});
+
+// Endpoint para agregar un nuevo descripcion
+app.post('/api/descripcion', (req, res) => {
+  const { modelo, descripcion } = req.body;
+  const query = 'INSERT INTO descripcion (modelo, descripcion) VALUES (?, ?)';
+  connection.query(query, [modelo, descripcion], (err, results) => {
+    if (err) {
+      console.error('Error adding descripcion:', err);
+      return res.status(500).send(err);
+    }
+    res.status(201).json({ message: 'Descripcion added successfully', id: results.insertId });
+  });
+});
+
+// Endpoint para actualizar un descripcion existente
+app.put('/api/descripcion/:modelo', (req, res) => {
+  const { modelo } = req.params;
+  const { descripcion } = req.body;
+  const query = 'UPDATE descripcion SET descripcion = ? WHERE modelo = ?';
+  connection.query(query, [descripcion, modelo], (err, results) => {
+    if (err) {
+      console.error('Error updating descripcion:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Descripcion updated successfully' });
+  });
+});
+
+// Endpoint para eliminar un descripcion existente
+app.delete('/api/descripcion/:modelo', (req, res) => {
+  const { modelo } = req.params;
+  const query = 'DELETE FROM descripcion WHERE modelo = ?';
+  connection.query(query, [modelo], (err, results) => {
+    if (err) {
+      console.error('Error deleting descripcion:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Descripcion deleted successfully' });
+  });
+});
+
+// Endpoint para obtener datos de la tabla productos
+app.get('/api/productos', (req, res) => {
+  connection.query('SELECT * FROM productos', (err, results) => {
+    if (err) {
+      console.error('Error fetching productos:', err);
+      return res.status(500).send(err);
+    }
+    res.json(results);
+  });
+});
+
+// Endpoint para agregar un nuevo producto
+app.post('/api/productos', (req, res) => {
+  const { carrito_cod, descripcion_modelo, cantidad, precio } = req.body;
+  const query = 'INSERT INTO productos (carrito_cod, descripcion_modelo, cantidad, precio) VALUES (?, ?, ?, ?)';
+  connection.query(query, [carrito_cod, descripcion_modelo, cantidad, precio], (err, results) => {
+    if (err) {
+      console.error('Error adding producto:', err);
+      return res.status(500).send(err);
+    }
+    res.status(201).json({ message: 'Producto added successfully', id: results.insertId });
+  });
+});
+
+// Endpoint para actualizar un producto existente
+app.put('/api/productos/:SKU', (req, res) => {
+  const { SKU } = req.params;
+  const { carrito_cod, descripcion_modelo, cantidad, precio } = req.body;
+  const query = 'UPDATE productos SET carrito_cod = ?, descripcion_modelo = ?, cantidad = ?, precio = ? WHERE SKU = ?';
+  connection.query(query, [carrito_cod, descripcion_modelo, cantidad, precio, SKU], (err, results) => {
+    if (err) {
+      console.error('Error updating producto:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Producto updated successfully' });
+  });
+});
+
+// Endpoint para eliminar un producto existente
+app.delete('/api/productos/:SKU', (req, res) => {
+  const { SKU } = req.params;
+  const query = 'DELETE FROM productos WHERE SKU = ?';
+  connection.query(query, [SKU], (err, results) => {
+    if (err) {
+      console.error('Error deleting producto:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Producto deleted successfully' });
+  });
+});
+
+// Endpoint para obtener datos de la tabla proveedor_has_productos
+app.get('/api/proveedor_has_productos', (req, res) => {
+  connection.query('SELECT * FROM proveedor_has_productos', (err, results) => {
+    if (err) {
+      console.error('Error fetching proveedor_has_productos:', err);
+      return res.status(500).send(err);
+    }
+    res.json(results);
+  });
+});
+
+// Endpoint para agregar una nueva relación proveedor-producto
+app.post('/api/proveedor_has_productos', (req, res) => {
+  const { Proveedor_codigo, Productos_SKU, Productos_descripcion_modelo } = req.body;
+  const query = 'INSERT INTO proveedor_has_productos (Proveedor_codigo, Productos_SKU, Productos_descripcion_modelo) VALUES (?, ?, ?)';
+  connection.query(query, [Proveedor_codigo, Productos_SKU, Productos_descripcion_modelo], (err, results) => {
+    if (err) {
+      console.error('Error adding proveedor_has_productos:', err);
+      return res.status(500).send(err);
+    }
+    res.status(201).json({ message: 'Relacion proveedor-producto added successfully', id: results.insertId });
+  });
+});
+
+// Endpoint para actualizar una relación proveedor-producto existente
+app.put('/api/proveedor_has_productos/:Proveedor_codigo/:Productos_SKU/:Productos_descripcion_modelo', (req, res) => {
+  const { Proveedor_codigo, Productos_SKU, Productos_descripcion_modelo } = req.params;
+  const query = 'UPDATE proveedor_has_productos SET Productos_SKU = ?, Productos_descripcion_modelo = ? WHERE Proveedor_codigo = ?';
+  connection.query(query, [Productos_SKU, Productos_descripcion_modelo, Proveedor_codigo], (err, results) => {
+    if (err) {
+      console.error('Error updating proveedor_has_productos:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Relacion proveedor-producto updated successfully' });
+  });
+});
+
+// Endpoint para eliminar una relación proveedor-producto existente
+app.delete('/api/proveedor_has_productos/:Proveedor_codigo/:Productos_SKU/:Productos_descripcion_modelo', (req, res) => {
+  const { Proveedor_codigo, Productos_SKU, Productos_descripcion_modelo } = req.params;
+  const query = 'DELETE FROM proveedor_has_productos WHERE Proveedor_codigo = ? AND Productos_SKU = ? AND Productos_descripcion_modelo = ?';
+  connection.query(query, [Proveedor_codigo, Productos_SKU, Productos_descripcion_modelo], (err, results) => {
+    if (err) {
+      console.error('Error deleting proveedor_has_productos:', err);
+      return res.status(500).send(err);
+    }
+    res.status(200).json({ message: 'Relacion proveedor-producto deleted successfully' });
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+

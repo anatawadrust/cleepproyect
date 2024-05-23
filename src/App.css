@@ -65,6 +65,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  width: 100%; /* Asegura que la tarjeta tome todo el ancho disponible */
 }
 
 .card h2 {
@@ -95,11 +96,15 @@ body {
 .card ul li span {
   flex: 1;
   text-align: center;
-  padding: 0 10px; /* Añadimos padding para más espacio entre los textos */
+  padding: 0 30px; /* Añadimos padding para más espacio entre los textos */
+}
+
+.card ul li span:first-child {
+  flex: 1.5; /* Da más espacio a la primera columna */
 }
 
 .card ul li span:last-child {
-  flex: 2;
+  flex: 2.5; /* Da más espacio a la última columna */
   text-align: right;
 }
 
@@ -109,6 +114,7 @@ form {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  width: 100%; /* Asegura que el formulario tome todo el ancho disponible */
 }
 
 form h2 {
