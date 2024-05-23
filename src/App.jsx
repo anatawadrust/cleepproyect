@@ -13,6 +13,7 @@ import AgregarProducto from './components/AgregarProducto';
 import ListaProductos from './components/ListaProductos';
 import AgregarProveedorHasProducto from './components/AgregarProveedorHasProducto';
 import ListaProveedorHasProductos from './components/ListaProveedorHasProductos';
+import Login from './components/Login';
 
 function App() {
   const [clientes, setClientes] = useState([]);
@@ -28,29 +29,36 @@ function App() {
   const [editingProducto, setEditingProducto] = useState(null);
   const [editingRelacion, setEditingRelacion] = useState(null);
   const [currentSection, setCurrentSection] = useState('clientes');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const clientesData = await getClientes();
-        const proveedoresData = await getProveedores();
-        const carritosData = await getCarrito();
-        const descripcionesData = await getDescripcion();
-        const productosData = await getProductos();
-        const relacionesData = await getProveedorHasProductos();
-        setClientes(clientesData);
-        setProveedores(proveedoresData);
-        setCarritos(carritosData);
-        setDescripciones(descripcionesData);
-        setProductos(productosData);
-        setRelaciones(relacionesData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    if (isAuthenticated) {
+      const fetchData = async () => {
+        try {
+          const clientesData = await getClientes();
+          const proveedoresData = await getProveedores();
+          const carritosData = await getCarrito();
+          const descripcionesData = await getDescripcion();
+          const productosData = await getProductos();
+          const relacionesData = await getProveedorHasProductos();
+          setClientes(clientesData);
+          setProveedores(proveedoresData);
+          setCarritos(carritosData);
+          setDescripciones(descripcionesData);
+          setProductos(productosData);
+          setRelaciones(relacionesData);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
 
-    fetchData();
-  }, []);
+      fetchData();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
 
   const handleAddCliente = async (nuevoCliente) => {
     try {
@@ -232,126 +240,133 @@ function App() {
 
   return (
     <div className="dashboard">
-      <div className="sidebar">
-        <h2>Menú</h2>
-        <nav>
-          <ul>
-            <li><a href="#!" onClick={() => setCurrentSection('clientes')}>Clientes</a></li>
-            <li><a href="#!" onClick={() => setCurrentSection('proveedores')}>Proveedores</a></li>
-            <li><a href="#!" onClick={() => setCurrentSection('carritos')}>Carritos</a></li>
-            <li><a href="#!" onClick={() => setCurrentSection('descripciones')}>Descripciones</a></li>
-            <li><a href="#!" onClick={() => setCurrentSection('productos')}>Productos</a></li>
-            <li><a href="#!" onClick={() => setCurrentSection('proveedor_has_productos')}>Proveedor Has Productos</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div className="main-content">
-        <div className="header">
-          <h1>Cleep.com!</h1>
-        </div>
-        {currentSection === 'clientes' && (
-          <div className="section">
-            <ListaClientes 
-              clientes={clientes} 
-              onEditClick={setEditingCliente} 
-              onDeleteClick={handleDeleteCliente} 
-            />
-            <AgregarCliente 
-              clientes={clientes} 
-              setClientes={setClientes} 
-              onAdd={handleAddCliente} 
-              onUpdate={handleUpdateCliente}
-              editingCliente={editingCliente}
-              setEditingCliente={setEditingCliente}
-            />
+      {isAuthenticated ? (
+        <>
+          <div className="sidebar">
+            <h2>Menú</h2>
+            <nav>
+              <ul>
+                <li><a href="#!" onClick={() => setCurrentSection('clientes')}>Clientes</a></li>
+                <li><a href="#!" onClick={() => setCurrentSection('proveedores')}>Proveedores</a></li>
+                <li><a href="#!" onClick={() => setCurrentSection('carritos')}>Carritos</a></li>
+                <li><a href="#!" onClick={() => setCurrentSection('descripciones')}>Descripciones</a></li>
+                <li><a href="#!" onClick={() => setCurrentSection('productos')}>Productos</a></li>
+                <li><a href="#!" onClick={() => setCurrentSection('proveedor_has_productos')}>Proveedor Has Productos</a></li>
+              </ul>
+            </nav>
+            <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button>
           </div>
-        )}
-        {currentSection === 'proveedores' && (
-          <div className="section">
-            <ListaProveedores 
-              proveedores={proveedores} 
-              onEditClick={setEditingProveedor} 
-              onDeleteClick={handleDeleteProveedor} 
-            />
-            <AgregarProveedor 
-              proveedores={proveedores} 
-              setProveedores={setProveedores} 
-              onAdd={handleAddProveedor} 
-              onUpdate={handleUpdateProveedor}
-              editingProveedor={editingProveedor}
-              setEditingProveedor={setEditingProveedor}
-            />
+          <div className="main-content">
+            <div className="header">
+              <h1>Cleep.com!</h1>
+            </div>
+            {currentSection === 'clientes' && (
+              <div className="section">
+                <ListaClientes 
+                  clientes={clientes} 
+                  onEditClick={setEditingCliente} 
+                  onDeleteClick={handleDeleteCliente} 
+                />
+                <AgregarCliente 
+                  clientes={clientes} 
+                  setClientes={setClientes} 
+                  onAdd={handleAddCliente} 
+                  onUpdate={handleUpdateCliente}
+                  editingCliente={editingCliente}
+                  setEditingCliente={setEditingCliente}
+                />
+              </div>
+            )}
+            {currentSection === 'proveedores' && (
+              <div className="section">
+                <ListaProveedores 
+                  proveedores={proveedores} 
+                  onEditClick={setEditingProveedor} 
+                  onDeleteClick={handleDeleteProveedor} 
+                />
+                <AgregarProveedor 
+                  proveedores={proveedores} 
+                  setProveedores={setProveedores} 
+                  onAdd={handleAddProveedor} 
+                  onUpdate={handleUpdateProveedor}
+                  editingProveedor={editingProveedor}
+                  setEditingProveedor={setEditingProveedor}
+                />
+              </div>
+            )}
+            {currentSection === 'carritos' && (
+              <div className="section">
+                <ListaCarrito 
+                  carritos={carritos} 
+                  onEditClick={setEditingCarrito} 
+                  onDeleteClick={handleDeleteCarrito} 
+                />
+                <AgregarCarrito 
+                  carritos={carritos} 
+                  setCarritos={setCarritos} 
+                  onAdd={handleAddCarrito} 
+                  onUpdate={handleUpdateCarrito}
+                  editingCarrito={editingCarrito}
+                  setEditingCarrito={setEditingCarrito}
+                />
+              </div>
+            )}
+            {currentSection === 'descripciones' && (
+              <div className="section">
+                <ListaDescripcion 
+                  descripciones={descripciones} 
+                  onEditClick={setEditingDescripcion} 
+                  onDeleteClick={handleDeleteDescripcion} 
+                />
+                <AgregarDescripcion 
+                  descripciones={descripciones} 
+                  setDescripciones={setDescripciones} 
+                  onAdd={handleAddDescripcion} 
+                  onUpdate={handleUpdateDescripcion}
+                  editingDescripcion={editingDescripcion}
+                  setEditingDescripcion={setEditingDescripcion}
+                />
+              </div>
+            )}
+            {currentSection === 'productos' && (
+              <div className="section">
+                <ListaProductos 
+                  productos={productos} 
+                  onEditClick={setEditingProducto} 
+                  onDeleteClick={handleDeleteProducto} 
+                />
+                <AgregarProducto 
+                  productos={productos} 
+                  setProductos={setProductos} 
+                  onAdd={handleAddProducto} 
+                  onUpdate={handleUpdateProducto}
+                  editingProducto={editingProducto}
+                  setEditingProducto={setEditingProducto}
+                />
+              </div>
+            )}
+            {currentSection === 'proveedor_has_productos' && (
+              <div className="section">
+                <ListaProveedorHasProductos 
+                  relaciones={relaciones} 
+                  onEditClick={setEditingRelacion} 
+                  onDeleteClick={handleDeleteProveedorHasProducto} 
+                />
+                <AgregarProveedorHasProducto 
+                  relaciones={relaciones} 
+                  setRelaciones={setRelaciones} 
+                  onAdd={handleAddProveedorHasProducto} 
+                  onUpdate={handleUpdateProveedorHasProducto}
+                  editingRelacion={editingRelacion}
+                  setEditingRelacion={setEditingRelacion}
+                />
+              </div>
+            )}
           </div>
-        )}
-        {currentSection === 'carritos' && (
-          <div className="section">
-            <ListaCarrito 
-              carritos={carritos} 
-              onEditClick={setEditingCarrito} 
-              onDeleteClick={handleDeleteCarrito} 
-            />
-            <AgregarCarrito 
-              carritos={carritos} 
-              setCarritos={setCarritos} 
-              onAdd={handleAddCarrito} 
-              onUpdate={handleUpdateCarrito}
-              editingCarrito={editingCarrito}
-              setEditingCarrito={setEditingCarrito}
-            />
-          </div>
-        )}
-        {currentSection === 'descripciones' && (
-          <div className="section">
-            <ListaDescripcion 
-              descripciones={descripciones} 
-              onEditClick={setEditingDescripcion} 
-              onDeleteClick={handleDeleteDescripcion} 
-            />
-            <AgregarDescripcion 
-              descripciones={descripciones} 
-              setDescripciones={setDescripciones} 
-              onAdd={handleAddDescripcion} 
-              onUpdate={handleUpdateDescripcion}
-              editingDescripcion={editingDescripcion}
-              setEditingDescripcion={setEditingDescripcion}
-            />
-          </div>
-        )}
-        {currentSection === 'productos' && (
-          <div className="section">
-            <ListaProductos 
-              productos={productos} 
-              onEditClick={setEditingProducto} 
-              onDeleteClick={handleDeleteProducto} 
-            />
-            <AgregarProducto 
-              productos={productos} 
-              setProductos={setProductos} 
-              onAdd={handleAddProducto} 
-              onUpdate={handleUpdateProducto}
-              editingProducto={editingProducto}
-              setEditingProducto={setEditingProducto}
-            />
-          </div>
-        )}
-        {currentSection === 'proveedor_has_productos' && (
-          <div className="section">
-            <ListaProveedorHasProductos 
-              relaciones={relaciones} 
-              onEditClick={setEditingRelacion} 
-              onDeleteClick={handleDeleteProveedorHasProducto} 
-            />
-            <AgregarProveedorHasProducto 
-              relaciones={relaciones} 
-              setRelaciones={setRelaciones} 
-              onAdd={handleAddProveedorHasProducto} 
-              onUpdate={handleUpdateProveedorHasProducto}
-              editingRelacion={editingRelacion}
-              setEditingRelacion={setEditingRelacion}
-            />
-          </div>
-        )}
-      </div>
+        </>
+      ) : (
+        <Login onLogin={setIsAuthenticated} />
+      )}
     </div>
   );
 }

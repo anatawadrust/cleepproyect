@@ -335,4 +335,3 @@ app.delete('/api/proveedor_has_productos/:Proveedor_codigo/:Productos_SKU/:Produ
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
