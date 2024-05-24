@@ -17,16 +17,19 @@ function Login({ onLogin }) {
         setError('');
         setIsBlocked(false);
         setAttempts(0);
-        onLogin(true);
+        onLogin(true, email);
       } else {
         setError('Código de verificación incorrecto');
       }
     } else {
       if (
         (email === 'aramansebastian@gmail.com' && password === 'torontocanada') ||
-        (email === 'rowenaaraman@gmail.com' && password === '1028860952XD')
+        (email === 'rowenaaraman@gmail.com' && password === '1028860952XD') ||
+        (email === 'luisfelipeq417@gmail.com' && password === 'fpacheco') ||
+        (email === 'Felipe.vargascol@gmail.com' && password === 'vfelipe') ||
+        (email === 'carlosherreraceet@gmail.com' && password === 'hcarlos') 
       ) {
-        onLogin(true);
+        onLogin(true, email);
       } else {
         setError('Correo o contraseña incorrectos');
         setAttempts(attempts + 1);
@@ -67,6 +70,7 @@ function Login({ onLogin }) {
         ) : (
           <form className="login-form" onSubmit={handleSubmit}>
             <h2>Cleep Login</h2>
+            <h2>(ADMINISTRADOR)</h2>
             <div>
               <label>Correo:</label>
               <input 

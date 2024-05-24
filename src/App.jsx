@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { getClientes, addCliente, updateCliente, deleteCliente, getProveedores, addProveedor, updateProveedor, deleteProveedor, getCarrito, addCarrito, updateCarrito, deleteCarrito, getDescripcion, addDescripcion, updateDescripcion, deleteDescripcion, getProductos, addProducto, updateProducto, deleteProducto, getProveedorHasProductos, addProveedorHasProducto, updateProveedorHasProducto, deleteProveedorHasProducto } from './services/api';
+import {
+  getClientes, addCliente, updateCliente, deleteCliente,
+  getProveedores, addProveedor, updateProveedor, deleteProveedor,
+  getCarrito, addCarrito, updateCarrito, deleteCarrito,
+  getDescripcion, addDescripcion, updateDescripcion, deleteDescripcion,
+  getProductos, addProducto, updateProducto, deleteProducto,
+  getProveedorHasProductos, addProveedorHasProducto, updateProveedorHasProducto, deleteProveedorHasProducto
+} from './services/api';
 import AgregarCliente from './components/AgregarCliente';
 import AgregarProveedor from './components/AgregarProveedor';
 import ListaClientes from './components/ListaClientes';
@@ -14,6 +21,7 @@ import ListaProductos from './components/ListaProductos';
 import AgregarProveedorHasProducto from './components/AgregarProveedorHasProducto';
 import ListaProveedorHasProductos from './components/ListaProveedorHasProductos';
 import Login from './components/Login';
+import Welcome from './components/Welcome';
 
 function App() {
   const [clientes, setClientes] = useState([]);
@@ -30,6 +38,8 @@ function App() {
   const [editingRelacion, setEditingRelacion] = useState(null);
   const [currentSection, setCurrentSection] = useState('clientes');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -58,6 +68,18 @@ function App() {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setUserEmail('');
+  };
+
+  const handleLogin = (isAuthenticated, email) => {
+    setIsAuthenticated(isAuthenticated);
+    setUserEmail(email);
+  };
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
   };
 
   const handleAddCliente = async (nuevoCliente) => {
@@ -239,11 +261,12 @@ function App() {
   };
 
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${theme}`}>
       {isAuthenticated ? (
         <>
           <div className="sidebar">
             <h2>Menú</h2>
+            <button onClick={toggleTheme}>Alternar Tema</button>
             <nav>
               <ul>
                 <li><a href="#!" onClick={() => setCurrentSection('clientes')}>Clientes</a></li>
@@ -255,6 +278,7 @@ function App() {
               </ul>
             </nav>
             <button className="logout-button" onClick={handleLogout}>Cerrar Sesión</button>
+            <p>Has ingresado como: {userEmail}</p>
           </div>
           <div className="main-content">
             <div className="header">
@@ -266,6 +290,7 @@ function App() {
                   clientes={clientes} 
                   onEditClick={setEditingCliente} 
                   onDeleteClick={handleDeleteCliente} 
+                  setClientes={setClientes}
                 />
                 <AgregarCliente 
                   clientes={clientes} 
@@ -283,6 +308,7 @@ function App() {
                   proveedores={proveedores} 
                   onEditClick={setEditingProveedor} 
                   onDeleteClick={handleDeleteProveedor} 
+                  setProveedores={setProveedores}
                 />
                 <AgregarProveedor 
                   proveedores={proveedores} 
@@ -300,6 +326,7 @@ function App() {
                   carritos={carritos} 
                   onEditClick={setEditingCarrito} 
                   onDeleteClick={handleDeleteCarrito} 
+                  setCarritos={setCarritos}
                 />
                 <AgregarCarrito 
                   carritos={carritos} 
@@ -317,6 +344,7 @@ function App() {
                   descripciones={descripciones} 
                   onEditClick={setEditingDescripcion} 
                   onDeleteClick={handleDeleteDescripcion} 
+                  setDescripciones={setDescripciones}
                 />
                 <AgregarDescripcion 
                   descripciones={descripciones} 
@@ -334,6 +362,7 @@ function App() {
                   productos={productos} 
                   onEditClick={setEditingProducto} 
                   onDeleteClick={handleDeleteProducto} 
+                  setProductos={setProductos}
                 />
                 <AgregarProducto 
                   productos={productos} 
@@ -351,6 +380,7 @@ function App() {
                   relaciones={relaciones} 
                   onEditClick={setEditingRelacion} 
                   onDeleteClick={handleDeleteProveedorHasProducto} 
+                  setRelaciones={setRelaciones}
                 />
                 <AgregarProveedorHasProducto 
                   relaciones={relaciones} 
@@ -365,10 +395,11 @@ function App() {
           </div>
         </>
       ) : (
-        <Login onLogin={setIsAuthenticated} />
+        <Login onLogin={handleLogin} />
       )}
     </div>
   );
 }
 
 export default App;
+ 

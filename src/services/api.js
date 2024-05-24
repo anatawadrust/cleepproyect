@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as Papa from 'papaparse';
+import { saveAs } from 'file-saver';
 
 const api = axios.create({
   baseURL: '/api',
@@ -242,4 +244,26 @@ export const deleteProveedorHasProducto = async (Proveedor_codigo, Productos_SKU
     console.error('Error deleting proveedor_has_productos:', error);
     throw error;
   }
+};
+
+// Función para importar datos desde un archivo CSV
+export const importDataFromCSV = (file) => {
+  return new Promise((resolve, reject) => {
+    Papa.parse(file, {
+      complete: (result) => {
+        resolve(result.data);
+      },
+      header: true,
+      error: (error) => {
+        reject(error);
+      }
+    });
+  });
+};
+
+// Función para exportar datos a CSV
+export const exportDataToCSV = (data, filename) => {
+  const csv = Papa.unparse(data);
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  saveAs(blob, filename);
 };

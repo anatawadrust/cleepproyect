@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const cron = require('node-cron');
 
 const app = express();
 const port = 3002;
@@ -22,6 +23,13 @@ connection.connect(err => {
     return;
   }
   console.log('Connected to the database');
+});
+
+// Automatización de tareas: Enviar reportes diarios
+cron.schedule('0 0 * * *', () => {
+  // Lógica para enviar reportes diarios
+  console.log('Enviando reporte diario...');
+  // Aquí puedes añadir la lógica para enviar correos electrónicos o generar reportes
 });
 
 // Endpoint para obtener datos de la tabla clientes
