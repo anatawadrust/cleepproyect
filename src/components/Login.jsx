@@ -22,7 +22,10 @@ function Login({ onLogin }) {
         setError('Código de verificación incorrecto');
       }
     } else {
-      if (email === 'aramansebastian@gmail.com' && password === 'torontocanada') {
+      if (
+        (email === 'aramansebastian@gmail.com' && password === 'torontocanada') ||
+        (email === 'rowenaaraman@gmail.com' && password === '1028860952XD')
+      ) {
         onLogin(true);
       } else {
         setError('Correo o contraseña incorrectos');
