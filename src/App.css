@@ -1,7 +1,7 @@
 /* General */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
+  background-color: white; /* Cambiado a blanco */
   margin: 0;
   padding: 0;
 }
@@ -60,6 +60,7 @@ body {
 .main-content {
   flex-grow: 1;
   padding: 20px 40px;
+  background-color: white; /* Asegura que el contenido principal también tenga fondo blanco */
 }
 
 .header {
@@ -280,3 +281,4 @@ form button[type="submit"]:hover {
 .search-and-actions input[type="file"]:hover {
   background-color: #e67e00;
 }
+

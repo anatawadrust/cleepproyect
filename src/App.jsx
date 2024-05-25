@@ -40,6 +40,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [theme, setTheme] = useState('light');
+  const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -260,6 +261,10 @@ function App() {
     }
   };
 
+  if (showWelcome && isAuthenticated) {
+    return <Welcome onClose={() => setShowWelcome(false)} />;
+  }
+
   return (
     <div className={`dashboard ${theme}`}>
       {isAuthenticated ? (
@@ -402,4 +407,3 @@ function App() {
 }
 
 export default App;
- 
