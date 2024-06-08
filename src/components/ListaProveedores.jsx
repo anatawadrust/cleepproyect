@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import './ListaProveedores.css';
 
 function ListaProveedores({ proveedores, onEditClick, onDeleteClick, setProveedores }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,27 +32,31 @@ function ListaProveedores({ proveedores, onEditClick, onDeleteClick, setProveedo
         <button onClick={handleExportClick}>Exportar Proveedores</button>
         <input type="file" onChange={handleImportChange} />
       </div>
-      <ul>
-        <li className="header">
-          <span>Nombre</span>
-          <span>Contacto</span>
-          <span>Teléfono</span>
-          <span>Dirección</span>
-          <span>Acciones</span>
-        </li>
-        {filteredProveedores.map(proveedor => (
-          <li key={proveedor.codigo}>
-            <span>{proveedor.nombre}</span>
-            <span>{proveedor.contacto}</span>
-            <span>{proveedor.telefono}</span>
-            <span>{proveedor.direccion}</span>
-            <span>
-              <button onClick={() => onEditClick(proveedor)} className="btn-edit">Editar</button>
-              <button onClick={() => onDeleteClick(proveedor.codigo)} className="btn-delete">Eliminar</button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <table className="proveedores-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredProveedores.map(proveedor => (
+            <tr key={proveedor.codigo}>
+              <td>{proveedor.nombre}</td>
+              <td>{proveedor.contacto}</td>
+              <td>{proveedor.telefono}</td>
+              <td>{proveedor.direccion}</td>
+              <td>
+                <button onClick={() => onEditClick(proveedor)} className="btn-edit">Editar</button>
+                <button onClick={() => onDeleteClick(proveedor.codigo)} className="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import './ListaDescripcion.css';
 
 function ListaDescripcion({ descripciones, onEditClick, onDeleteClick, setDescripciones }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,23 +31,27 @@ function ListaDescripcion({ descripciones, onEditClick, onDeleteClick, setDescri
         <button onClick={handleExportClick}>Exportar Descripciones</button>
         <input type="file" onChange={handleImportChange} />
       </div>
-      <ul>
-        <li className="header">
-          <span>Modelo</span>
-          <span>Descripción</span>
-          <span>Acciones</span>
-        </li>
-        {filteredDescripciones.map(descripcion => (
-          <li key={descripcion.modelo}>
-            <span>{descripcion.modelo}</span>
-            <span>{descripcion.descripcion}</span>
-            <span>
-              <button onClick={() => onEditClick(descripcion)} className="btn-edit">Editar</button>
-              <button onClick={() => onDeleteClick(descripcion.modelo)} className="btn-delete">Eliminar</button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <table className="descripciones-table">
+        <thead>
+          <tr>
+            <th>Modelo</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredDescripciones.map(descripcion => (
+            <tr key={descripcion.modelo}>
+              <td>{descripcion.modelo}</td>
+              <td>{descripcion.descripcion}</td>
+              <td>
+                <button onClick={() => onEditClick(descripcion)} className="btn-edit">Editar</button>
+                <button onClick={() => onDeleteClick(descripcion.modelo)} className="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

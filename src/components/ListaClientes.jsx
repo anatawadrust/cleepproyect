@@ -31,35 +31,39 @@ function ListaClientes({ clientes, onEditClick, onDeleteClick, setClientes }) {
         <button onClick={handleExportClick}>Exportar Clientes</button>
         <input type="file" onChange={handleImportChange} />
       </div>
-      <ul>
-        <li className="header">
-          <span>Nombre</span>
-          <span>Apellido</span>
-          <span>Correo</span>
-          <span>Fecha de Nacimiento</span>
-          <span>Teléfono</span>
-          <span>País</span>
-          <span>Ciudad</span>
-          <span>Contraseña</span>
-          <span>Acciones</span>
-        </li>
-        {filteredClientes.map(cliente => (
-          <li key={cliente.codigo}>
-            <span>{cliente.nombre}</span>
-            <span>{cliente.apellido}</span>
-            <span>{cliente.correo}</span>
-            <span>{cliente.fecha_nac}</span>
-            <span>{cliente.telefono}</span>
-            <span>{cliente.pais}</span>
-            <span>{cliente.ciudad}</span>
-            <span>{cliente.contrasena}</span>
-            <span>
-              <button onClick={() => onEditClick(cliente)} className="btn-edit">Editar</button>
-              <button onClick={() => onDeleteClick(cliente.codigo)} className="btn-delete">Eliminar</button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <table className="clientes-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Teléfono</th>
+            <th>País</th>
+            <th>Ciudad</th>
+            <th>Contraseña</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredClientes.map(cliente => (
+            <tr key={cliente.codigo}>
+              <td>{cliente.nombre}</td>
+              <td>{cliente.apellido}</td>
+              <td>{cliente.correo}</td>
+              <td>{cliente.fecha_nac}</td>
+              <td>{cliente.telefono}</td>
+              <td>{cliente.pais}</td>
+              <td>{cliente.ciudad}</td>
+              <td>{cliente.contrasena}</td>
+              <td>
+                <button onClick={() => onEditClick(cliente)} className="btn-edit">Editar</button>
+                <button onClick={() => onDeleteClick(cliente.codigo)} className="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

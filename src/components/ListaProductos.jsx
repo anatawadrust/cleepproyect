@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import './ListaProductos.css';
 
 function ListaProductos({ productos, onEditClick, onDeleteClick, setProductos }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,29 +32,33 @@ function ListaProductos({ productos, onEditClick, onDeleteClick, setProductos })
         <button onClick={handleExportClick}>Exportar Productos</button>
         <input type="file" onChange={handleImportChange} />
       </div>
-      <ul>
-        <li className="header">
-          <span>SKU</span>
-          <span>Carrito Código</span>
-          <span>Descripción Modelo</span>
-          <span>Cantidad</span>
-          <span>Precio</span>
-          <span>Acciones</span>
-        </li>
-        {filteredProductos.map(producto => (
-          <li key={producto.SKU}>
-            <span>{producto.SKU}</span>
-            <span>{producto.carrito_cod}</span>
-            <span>{producto.descripcion_modelo}</span>
-            <span>{producto.cantidad}</span>
-            <span>{producto.precio}</span>
-            <span>
-              <button onClick={() => onEditClick(producto)} className="btn-edit">Editar</button>
-              <button onClick={() => onDeleteClick(producto.SKU)} className="btn-delete">Eliminar</button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <table className="productos-table">
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Carrito Código</th>
+            <th>Descripción Modelo</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredProductos.map(producto => (
+            <tr key={producto.SKU}>
+              <td>{producto.SKU}</td>
+              <td>{producto.carrito_cod}</td>
+              <td>{producto.descripcion_modelo}</td>
+              <td>{producto.cantidad}</td>
+              <td>{producto.precio}</td>
+              <td>
+                <button onClick={() => onEditClick(producto)} className="btn-edit">Editar</button>
+                <button onClick={() => onDeleteClick(producto.SKU)} className="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

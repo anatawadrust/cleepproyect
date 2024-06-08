@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import './ListaProveedorHasProductos.css';
 
 function ListaProveedorHasProductos({ relaciones, onEditClick, onDeleteClick, setRelaciones }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,25 +32,29 @@ function ListaProveedorHasProductos({ relaciones, onEditClick, onDeleteClick, se
         <button onClick={handleExportClick}>Exportar Relaciones</button>
         <input type="file" onChange={handleImportChange} />
       </div>
-      <ul>
-        <li className="header">
-          <span>Proveedor Código</span>
-          <span>Productos SKU</span>
-          <span>Productos Descripción Modelo</span>
-          <span>Acciones</span>
-        </li>
-        {filteredRelaciones.map(relacion => (
-          <li key={`${relacion.Proveedor_codigo}-${relacion.Productos_SKU}-${relacion.Productos_descripcion_modelo}`}>
-            <span>{relacion.Proveedor_codigo}</span>
-            <span>{relacion.Productos_SKU}</span>
-            <span>{relacion.Productos_descripcion_modelo}</span>
-            <span>
-              <button onClick={() => onEditClick(relacion)} className="btn-edit">Editar</button>
-              <button onClick={() => onDeleteClick(relacion.Proveedor_codigo, relacion.Productos_SKU, relacion.Productos_descripcion_modelo)} className="btn-delete">Eliminar</button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <table className="relaciones-table">
+        <thead>
+          <tr>
+            <th>Proveedor Código</th>
+            <th>Productos SKU</th>
+            <th>Productos Descripción Modelo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredRelaciones.map(relacion => (
+            <tr key={`${relacion.Proveedor_codigo}-${relacion.Productos_SKU}-${relacion.Productos_descripcion_modelo}`}>
+              <td>{relacion.Proveedor_codigo}</td>
+              <td>{relacion.Productos_SKU}</td>
+              <td>{relacion.Productos_descripcion_modelo}</td>
+              <td>
+                <button onClick={() => onEditClick(relacion)} className="btn-edit">Editar</button>
+                <button onClick={() => onDeleteClick(relacion.Proveedor_codigo, relacion.Productos_SKU, relacion.Productos_descripcion_modelo)} className="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

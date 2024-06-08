@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import './ListaCarrito.css';
 
 function ListaCarrito({ carritos, onEditClick, onDeleteClick, setCarritos }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,25 +32,29 @@ function ListaCarrito({ carritos, onEditClick, onDeleteClick, setCarritos }) {
         <button onClick={handleExportClick}>Exportar Carritos</button>
         <input type="file" onChange={handleImportChange} />
       </div>
-      <ul>
-        <li className="header">
-          <span>Cliente</span>
-          <span>Producto</span>
-          <span>Proveedor Código</span>
-          <span>Acciones</span>
-        </li>
-        {filteredCarritos.map(carrito => (
-          <li key={carrito.cod}>
-            <span>{carrito.cliente}</span>
-            <span>{carrito.producto}</span>
-            <span>{carrito.proveedor_codigo}</span>
-            <span>
-              <button onClick={() => onEditClick(carrito)} className="btn-edit">Editar</button>
-              <button onClick={() => onDeleteClick(carrito.cod)} className="btn-delete">Eliminar</button>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <table className="carritos-table">
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th>Proveedor Código</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredCarritos.map(carrito => (
+            <tr key={carrito.cod}>
+              <td>{carrito.cliente}</td>
+              <td>{carrito.producto}</td>
+              <td>{carrito.proveedor_codigo}</td>
+              <td>
+                <button onClick={() => onEditClick(carrito)} className="btn-edit">Editar</button>
+                <button onClick={() => onDeleteClick(carrito.cod)} className="btn-delete">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 function AgregarCliente({ clientes, setClientes, onAdd, onUpdate, editingCliente, setEditingCliente }) {
-  const [form, setForm] = useState({ nombre: '', apellido: '', correo: '', fecha_nac: '', telefono: '', pais: '', ciudad: '', contrasena: '' });
+  const [form, setForm] = useState({
+    nombre: '', apellido: '', correo: '', fecha_nac: '', telefono: '', pais: '', ciudad: '', contrasena: ''
+  });
 
   useEffect(() => {
     if (editingCliente) {
       setForm(editingCliente);
     } else {
-      setForm({ nombre: '', apellido: '', correo: '', fecha_nac: '', telefono: '', pais: '', ciudad: '', contrasena: '' });
+      setForm({
+        nombre: '', apellido: '', correo: '', fecha_nac: '', telefono: '', pais: '', ciudad: '', contrasena: ''
+      });
     }
   }, [editingCliente]);
 
@@ -23,7 +27,10 @@ function AgregarCliente({ clientes, setClientes, onAdd, onUpdate, editingCliente
     } else {
       onAdd(form);
     }
-    setForm({ nombre: '', apellido: '', correo: '', fecha_nac: '', telefono: '', pais: '', ciudad: '', contrasena: '' });
+    setForm({
+      nombre: '', apellido: '', correo: '', fecha_nac: '', telefono: '', pais: '', ciudad: '', contrasena: ''
+    });
+    setEditingCliente(null);
   };
 
   return (
@@ -70,3 +77,4 @@ function AgregarCliente({ clientes, setClientes, onAdd, onUpdate, editingCliente
 }
 
 export default AgregarCliente;
+  
