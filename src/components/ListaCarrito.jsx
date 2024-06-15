@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 import './ListaCarrito.css';
 
 function ListaCarrito({ carritos, onEditClick, onDeleteClick, setCarritos }) {
@@ -11,8 +13,14 @@ function ListaCarrito({ carritos, onEditClick, onDeleteClick, setCarritos }) {
     String(carrito.proveedor_codigo).toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleExportClick = () => {
+  const handleExportCSVClick = () => {
     exportDataToCSV(carritos, 'carritos.csv');
+  };
+
+  const handleExportPDFClick = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: '.carritos-table' });
+    doc.save('carritos.pdf');
   };
 
   const handleImportChange = (e) => {
@@ -29,7 +37,8 @@ function ListaCarrito({ carritos, onEditClick, onDeleteClick, setCarritos }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleExportClick}>Exportar Carritos</button>
+        <button onClick={handleExportCSVClick} style={{ backgroundColor: 'green', color: 'white' }}>Exportar Carritos (CSV)</button>
+        <button onClick={handleExportPDFClick} style={{ backgroundColor: 'red', color: 'white' }}>Exportar Carritos (PDF)</button>
         <input type="file" onChange={handleImportChange} />
       </div>
       <table className="carritos-table">

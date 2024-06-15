@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 import './ListaDescripcion.css';
 
 function ListaDescripcion({ descripciones, onEditClick, onDeleteClick, setDescripciones }) {
@@ -10,8 +12,14 @@ function ListaDescripcion({ descripciones, onEditClick, onDeleteClick, setDescri
     descripcion.descripcion.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleExportClick = () => {
+  const handleExportCSVClick = () => {
     exportDataToCSV(descripciones, 'descripciones.csv');
+  };
+
+  const handleExportPDFClick = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: '.descripciones-table' });
+    doc.save('descripciones.pdf');
   };
 
   const handleImportChange = (e) => {
@@ -28,7 +36,8 @@ function ListaDescripcion({ descripciones, onEditClick, onDeleteClick, setDescri
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleExportClick}>Exportar Descripciones</button>
+        <button onClick={handleExportCSVClick} style={{ backgroundColor: 'green', color: 'white' }}>Exportar Descripciones (CSV)</button>
+        <button onClick={handleExportPDFClick} style={{ backgroundColor: 'red', color: 'white' }}>Exportar Descripciones (PDF)</button>
         <input type="file" onChange={handleImportChange} />
       </div>
       <table className="descripciones-table">

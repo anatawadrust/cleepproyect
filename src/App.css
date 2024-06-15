@@ -1,7 +1,7 @@
 /* General */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: white; /* Cambiado a blanco */
+  background-color: white;
   margin: 0;
   padding: 0;
 }
@@ -60,7 +60,7 @@ body {
 .main-content {
   flex-grow: 1;
   padding: 20px 40px;
-  background-color: white; /* Asegura que el contenido principal también tenga fondo blanco */
+  background-color: white;
 }
 
 .header {
@@ -70,6 +70,11 @@ body {
   text-align: center;
   border-radius: 8px;
   margin-bottom: 20px;
+}
+
+.header img {
+  vertical-align: middle;
+  margin-right: 10px;
 }
 
 .card {
@@ -291,7 +296,7 @@ form button[type="submit"]:hover {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
-  color: #000; /* Asegura que el texto de las celdas sea negro */
+  color: #000;
 }
 
 .clientes-table th {
@@ -336,4 +341,3 @@ form button[type="submit"]:hover {
 .btn-delete:hover {
   background-color: #c82333;
 }
-

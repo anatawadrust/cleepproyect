@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { exportDataToCSV, importDataFromCSV } from '../services/api';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 import './ListaProveedorHasProductos.css';
 
 function ListaProveedorHasProductos({ relaciones, onEditClick, onDeleteClick, setRelaciones }) {
@@ -11,8 +13,14 @@ function ListaProveedorHasProductos({ relaciones, onEditClick, onDeleteClick, se
     typeof relacion.Productos_descripcion_modelo === 'string' && relacion.Productos_descripcion_modelo.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleExportClick = () => {
+  const handleExportCSVClick = () => {
     exportDataToCSV(relaciones, 'relaciones.csv');
+  };
+
+  const handleExportPDFClick = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: '.relaciones-table' });
+    doc.save('relaciones.pdf');
   };
 
   const handleImportChange = (e) => {
@@ -29,7 +37,8 @@ function ListaProveedorHasProductos({ relaciones, onEditClick, onDeleteClick, se
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleExportClick}>Exportar Relaciones</button>
+        <button onClick={handleExportCSVClick} style={{ backgroundColor: 'green', color: 'white' }}>Exportar Relaciones (CSV)</button>
+        <button onClick={handleExportPDFClick} style={{ backgroundColor: 'red', color: 'white' }}>Exportar Relaciones (PDF)</button>
         <input type="file" onChange={handleImportChange} />
       </div>
       <table className="relaciones-table">

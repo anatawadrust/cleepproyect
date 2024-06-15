@@ -287,7 +287,7 @@ function App() {
           </div>
           <div className="main-content">
             <div className="header">
-              <h1>Cleep.com!</h1>
+              <h1><img src="Captura de pantalla 2024-06-15 153948.png" alt="" /> CLEEP-COM!</h1>
             </div>
             {currentSection === 'clientes' && (
               <div className="section">
