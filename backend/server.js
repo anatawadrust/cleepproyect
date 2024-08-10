@@ -1,8 +1,8 @@
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const cron = require('node-cron');
+import express from 'express';
+import mysql from 'mysql2';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import cron from 'node-cron';
 
 const app = express();
 const port = 3002;
@@ -339,7 +339,7 @@ app.delete('/api/proveedor_has_productos/:Proveedor_codigo/:Productos_SKU/:Produ
   });
 });
 
-
+export default app;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
