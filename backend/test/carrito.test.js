@@ -11,10 +11,11 @@ describe('Carrito API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('array');
         done();
+        console.log('Resultado de obtener todos los carritos:', res.body);
       });
   });
 
-  it('Debe agregar un nuevo carrito', (done) => {
+  it('Asigna un nuevo carrito a un cliente', (done) => {
     const newCarrito = {
       cliente: 'Cliente 1',
       producto: 'Producto 1',
@@ -29,23 +30,26 @@ describe('Carrito API', () => {
         expect(res.body.message).to.equal('Carrito added successfully');
         expect(res.body).to.have.property('id');
         done();
+        console.log('Resultado de agregar un nuevo carrito a un cliente:', res.body);
+
       });
   });
 
   it('Debe actualizar un carrito existente', (done) => {
     const updateCarrito = {
-      cliente: 'Cliente 2',
-      producto: 'Producto 2',
-      proveedor_codigo: 2
+      cliente: 'Cliente 1',
+      producto: 'Producto 1',
+      proveedor_codigo: 1
     };
 
     request(app)
-      .put('/api/carrito/1')
+      .put('/api/carrito/18')
       .send(updateCarrito)
       .end((err, res) => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Carrito updated successfully');
         done();
+        console.log('Resultado de actualizar un carrito:', res.body);
       });
   });
 
@@ -56,6 +60,7 @@ describe('Carrito API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Carrito deleted successfully');
         done();
+        console.log('Resultado de eliminar un carrito:', res.body);
       });
   });
 

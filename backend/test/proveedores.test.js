@@ -11,6 +11,7 @@ describe('Proveedores API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('array');
         done();
+        console.log('Resultado de obtener todos los proveedores:', res.body);
       });
   });
 
@@ -30,6 +31,7 @@ describe('Proveedores API', () => {
         expect(res.body.message).to.equal('Proveedor added successfully');
         expect(res.body).to.have.property('id');
         done();
+        console.log('Resultado de agregar un nuevo proveedor:', res.body);
       });
   });
 
@@ -48,6 +50,7 @@ describe('Proveedores API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Proveedor updated successfully');
         done();
+        console.log('Resultado de actualizar un proveedor:', res.body);
       });
   });
 
@@ -58,6 +61,7 @@ describe('Proveedores API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Proveedor deleted successfully');
         done();
+        console.log('Resultado de eliminar un proveedor:', res.body);
       });
   });
 

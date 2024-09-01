@@ -10,11 +10,12 @@
         "body-parser": "^1.19.0",
         "cors": "^2.8.5",
         "express": "^4.17.1",
-        "mysql2": "^2.2.5"
+        "mysql2": "^2.2.5",
+        "node-cron": "^3.0.3"
     },
     "devDependencies": {
         "chai": "^5.1.1",
-        "mocha": "^10.7.0",
+        "mocha": "^10.7.3",
         "supertest": "^7.0.0"
     }
 }

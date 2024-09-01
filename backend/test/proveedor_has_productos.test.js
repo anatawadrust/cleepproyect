@@ -11,6 +11,7 @@ describe('Proveedor-Has-Productos API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('array');
         done();
+        console.log('Resultado de obtener todos las entidades P-P:', res.body);
       });
   });
 
@@ -29,6 +30,7 @@ describe('Proveedor-Has-Productos API', () => {
         expect(res.body.message).to.equal('Relacion proveedor-producto added successfully');
         expect(res.body).to.have.property('id');
         done();
+        console.log('Resultado de agregar una nueva entidad P-P:', res.body);
       });
   });
 
@@ -45,6 +47,7 @@ describe('Proveedor-Has-Productos API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Relacion proveedor-producto updated successfully');
         done();
+        console.log('Resultado de actualizar una entidad P-P:', res.body);
       });
   });
 
@@ -55,6 +58,7 @@ describe('Proveedor-Has-Productos API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Relacion proveedor-producto deleted successfully');
         done();
+        console.log('Resultado de eliminar una entidad P-P:', res.body);
       });
   });
 

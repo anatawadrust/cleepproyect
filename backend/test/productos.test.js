@@ -11,6 +11,7 @@ describe('Productos API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('array');
         done();
+        console.log('Resultado de obtener todos los productos:', res.body);
       });
   });
 
@@ -30,6 +31,7 @@ describe('Productos API', () => {
         expect(res.body.message).to.equal('Producto added successfully');
         expect(res.body).to.have.property('id');
         done();
+        console.log('Resultado de agregar un nuevo producto:', res.body);
       });
   });
 
@@ -48,6 +50,7 @@ describe('Productos API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Producto updated successfully');
         done();
+        console.log('Resultado de actualizar un producto:', res.body);
       });
   });
 
@@ -58,6 +61,7 @@ describe('Productos API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Producto deleted successfully');
         done();
+        console.log('Resultado de eliminar un producto:', res.body);
       });
   });
 

@@ -11,6 +11,7 @@ describe('Clientes API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('array');
         done();
+        console.log('Resultado de obtener todos los clientes:', res.body);
       });
   });
 
@@ -34,6 +35,7 @@ describe('Clientes API', () => {
         expect(res.body.message).to.equal('Cliente added successfully');
         expect(res.body).to.have.property('id');
         done();
+        console.log('Resultado de agregar un nuevo cliente:', res.body);
       });
   });
 
@@ -56,6 +58,7 @@ describe('Clientes API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Cliente updated successfully');
         done();
+        console.log('Resultado de actualizar un cliente:', res.body);
       });
   });
 
@@ -66,6 +69,7 @@ describe('Clientes API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Cliente deleted successfully');
         done();
+        console.log('Resultado de eliminar un cliente:', res.body);
       });
   });
 

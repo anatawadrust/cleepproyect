@@ -11,6 +11,7 @@ describe('Descripcion API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body).to.be.an('array');
         done();
+        console.log('Resultado de obtener todas las descripciones:', res.body);
       });
   });
 
@@ -28,6 +29,7 @@ describe('Descripcion API', () => {
         expect(res.body.message).to.equal('Descripcion added successfully');
         expect(res.body).to.have.property('id');
         done();
+        console.log('Resultado de agregar una nueva descripcion:', res.body);
       });
   });
 
@@ -43,6 +45,7 @@ describe('Descripcion API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Descripcion updated successfully');
         done();
+        console.log('Resultado de actualizar una descripcion:', res.body);
       });
   });
 
@@ -53,6 +56,7 @@ describe('Descripcion API', () => {
         expect(res.statusCode).to.equal(200);
         expect(res.body.message).to.equal('Descripcion deleted successfully');
         done();
+        console.log('Resultado de eliminar una descripcion:', res.body);
       });
   });
 
