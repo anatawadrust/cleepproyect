@@ -64,23 +64,28 @@ body {
 }
 
 .header {
-  background-color: #ff8c00;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  border-radius: 8px;
+  background-color: whitesmoke;
   margin-bottom: 20px;
+  border-radius: 20px;
+  width: 100%; /* Ajusta el tamaño del contenedor según necesites */
+  height: 150px; /* Ajusta el tamaño del contenedor según necesites */
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido dentro del contenedor */
+  justify-content: center; /* Centra horizontalmente el contenido dentro del contenedor */
+  border: 2px solid orange; /* Opcional: solo para visualizar el contenedor */
 }
 
 .header img {
-  vertical-align: middle;
-  margin-right: 10px;
-}
+  width: 350px; /* Ajusta el tamaño del logo según necesites */
+  height: auto; /* Mantiene las proporciones del logo */
+} 
+
 
 .card {
-  background-color: white;
+  border: 2px solid orange;
+  background-color: whitesmoke;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   width: 100%;
